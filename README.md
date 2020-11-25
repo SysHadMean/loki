@@ -36,7 +36,8 @@ To get a local copy up and running follow these simple steps.
 ```bash
     go build
 ```
-32. (Optionnal) Add the executable file to your PATH
+
+3. (Optionnal) Add the executable file to your PATH
 
 ### Usage
 
