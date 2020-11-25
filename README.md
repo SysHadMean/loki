@@ -31,13 +31,12 @@ To get a local copy up and running follow these simple steps.
     git clone https://github.com/Yatoub42/loki.git
 ```
 
-1. Build for your OS
+2. Build for your OS
 
 ```bash
-   go build
+    go build
 ```
-
-2. (Optionnal) Add the executable file to your PATH
+32. (Optionnal) Add the executable file to your PATH
 
 ### Usage
 
