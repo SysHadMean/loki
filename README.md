@@ -8,10 +8,9 @@
                 ▀                   █   ██         ▀              ▀                   ▀    
 ------------
 [![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/Yatoub42/loki?style=for-the-badge)
+![GitHub go.mod Go version (branch)](https://img.shields.io/github/go-mod/go-version/Yatoub42/loki/main?style=for-the-badge)
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)](https://forthebadge.com)  
 ![GitHub top language](https://img.shields.io/github/languages/top/Yatoub42/loki?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/Yatoub42/loki?style=for-the-badge)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Yatoub42/loki?style=for-the-badge)
 
 ## Description

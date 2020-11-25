@@ -22,7 +22,7 @@ func main() {
     ▀        █    ▐     ▀███▀   █  █ █ ▀███▀    █    ▄▀      █      ▀              █   
             ▀                   █   ██         ▀              ▀                   ▀    
                                                                                        
-	A local file encryptor in AES. Designed by Yatoub42 under MIT Licence
+	A local file encryptor in AES. Designed by Yatoub42 under MIT License
 
 
 	`
