@@ -28,13 +28,13 @@ To get a local copy up and running follow these simple steps.
 1. Clone the repo
 
 ```bash
-    git clone ...
+    git clone https://github.com/Yatoub42/loki.git
 ```
 
 1. Build for your OS
 
 ```bash
-   go build main.go
+   go build
 ```
 
 2. (Optionnal) Add the executable file to your PATH
