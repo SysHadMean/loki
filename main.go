@@ -12,7 +12,7 @@ import (
 
 func main() {
 
-	banniere :=
+	banner :=
 		`
 	
 █    ████▄ █  █▀ ▄█     ▄███▄      ▄   ▄█▄    █▄▄▄▄ ▀▄    ▄ █ ▄▄     ▄▄▄▄▀ ████▄ █▄▄▄▄ 
@@ -22,7 +22,7 @@ func main() {
     ▀        █    ▐     ▀███▀   █  █ █ ▀███▀    █    ▄▀      █      ▀              █   
             ▀                   █   ██         ▀              ▀                   ▀    
                                                                                        
-	A local file encryptor in AES. Designed by Yatoub42 under MIT License
+	A local file encryptor in AES-256. Designed by Yatoub42 under MIT License
 
 
 	`
@@ -39,7 +39,7 @@ SYNOPSIS
     loki OPTIONS path/to/file
 
 DESCRIPTION
-	 Loki encrypts a given file with a password using the AES algorithm. 
+	 Loki encrypts a given file with a password using the AES-256 algorithm. 
 	 The password is not kept and files encrypted with Loki 
 	 must be decrypted by him with the same password used for encryption.
 
@@ -57,21 +57,24 @@ FILES
      /path/to/file
         The given file must be with full path
 	`
+	// Run without args
 	if len(os.Args) == 1 {
-		fmt.Println(banniere)
+		fmt.Println(banner)
 		fmt.Println("Help with -h argument")
 		os.Exit(0)
 	}
-	fmt.Println(banniere)
+	fmt.Println(banner)
+	// Check args
 	if os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3 {
 		fmt.Println(usage)
 	} else if len(os.Args) == 3 {
 		file := os.Args[2]
+		// Read password
 		fmt.Print("Enter Password: ")
 		bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
 		if err == nil {
-			password := string(bytePassword)
-			passwordHash := sha256.Sum256([]byte(password))
+			// Hash given password in 32 byte slice to have AES-256 encryption
+			passwordHash := sha256.Sum256([]byte(string(bytePassword)))
 			crypt.InitializeBlock([]byte(passwordHash[:]))
 			if strings.HasSuffix(file, ".loki") && os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
 				err := crypt.Decrypter(file)

@@ -15,9 +15,9 @@
 
 ## Description
 
-A local file encryptor in AES. Designed by Yatoub42
+A local file encryptor in AES-256. Designed by Yatoub42
 
-Loki encrypts a given file with a password using the AES algorithm. The password is not kept and files encrypted with Loki must be decrypted by him with the same password used for encryption.
+Loki encrypts a given file with a password using the AES-256 algorithm. The password is not kept and files encrypted with Loki must be decrypted by him with the same password used for encryption.
 
 ## Getting start
 
