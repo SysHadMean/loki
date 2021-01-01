@@ -57,6 +57,7 @@ FILES
      /path/to/file
         The given file must be with full path
 	`
+
 	// Run without args
 	if len(os.Args) == 1 {
 		fmt.Println(banner)
@@ -64,31 +65,32 @@ FILES
 		os.Exit(0)
 	}
 	fmt.Println(banner)
-	// Check args
-	if os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3 {
-		fmt.Println(usage)
-	} else if len(os.Args) == 3 {
-		file := os.Args[2]
-		// Read password
-		fmt.Print("Enter Password: ")
-		bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
-		if err == nil {
-			// Hash given password in 32 byte slice to have AES-256 encryption
-			passwordHash := sha256.Sum256([]byte(string(bytePassword)))
-			crypt.InitializeBlock([]byte(passwordHash[:]))
-			if strings.HasSuffix(file, ".loki") && os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
-				err := crypt.Decrypter(file)
-				if err != nil {
-					panic(err.Error())
-				}
-			} else if os.Args[1] == "-e" || os.Args[1] == "--encrypt" {
-				err := crypt.Encrypter(file)
-				if err != nil {
-					panic(err.Error())
+	//check args
+	switch {
+		case os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3:
+			fmt.Println(usage)
+		case len(os.Args) == 3:
+			file := os.Args[2]
+			// Read password
+			fmt.Print("Enter Password: ")
+			bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+			if err == nil {
+				// Hash given password in 32 byte slice to have AES-256 encryption
+				passwordHash := sha256.Sum256([]byte(string(bytePassword)))
+				crypt.InitializeBlock([]byte(passwordHash[:]))
+				if strings.HasSuffix(file, ".loki") && os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
+					err := crypt.Decrypter(file)
+					if err != nil {
+						panic(err.Error())
+					}
+				} else if os.Args[1] == "-e" || os.Args[1] == "--encrypt" {
+					err := crypt.Encrypter(file)
+					if err != nil {
+						panic(err.Error())
+					}
 				}
 			}
-		}
-	} else {
-		fmt.Println("Error in given argument, maybe use -h")
+		default:
+			fmt.Println("Error in given argument, maybe use -h")
 	}
 }
