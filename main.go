@@ -5,9 +5,15 @@ import (
 	"fmt"
 	"loki/crypt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"golang.org/x/crypto/ssh/terminal"
+)
+
+const (
+	Separator     = os.PathSeparator
+	ListSeparator = os.PathListSeparator
 )
 
 func main() {
@@ -36,7 +42,7 @@ NAME
     Loki - AES Local file encryptor
 
 SYNOPSIS
-    loki OPTIONS path/to/file
+    loki OPTIONS file
 
 DESCRIPTION
 	 Loki encrypts a given file with a password using the AES-256 algorithm. 
@@ -54,8 +60,8 @@ OPTIONS
 	 	Decrypt a loki file
 
 FILES
-     /path/to/file
-        The given file must be with full path
+	 The file to encrypt/decrypt, it must have one or more extension
+	 For example you can have test.txt or test.text.yml
 	`
 
 	// Run without args
@@ -67,30 +73,33 @@ FILES
 	fmt.Println(banner)
 	//check args
 	switch {
-		case os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3:
-			fmt.Println(usage)
-		case len(os.Args) == 3:
-			file := os.Args[2]
-			// Read password
-			fmt.Print("Enter Password: ")
-			bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
-			if err == nil {
-				// Hash given password in 32 byte slice to have AES-256 encryption
-				passwordHash := sha256.Sum256([]byte(string(bytePassword)))
-				crypt.InitializeBlock([]byte(passwordHash[:]))
-				if strings.HasSuffix(file, ".loki") && os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
-					err := crypt.Decrypter(file)
-					if err != nil {
-						panic(err.Error())
-					}
-				} else if os.Args[1] == "-e" || os.Args[1] == "--encrypt" {
-					err := crypt.Encrypter(file)
-					if err != nil {
-						panic(err.Error())
-					}
+	case os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3:
+		fmt.Println(usage)
+	case len(os.Args) == 3:
+		file, err := filepath.Abs(os.Args[2])
+		if err != nil {
+			fmt.Println("Error in given file")
+		}
+		// Read password
+		fmt.Print("Enter Password: ")
+		bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+		if err == nil {
+			// Hash given password in 32 byte slice to init the AES-256 encryption
+			passwordHash := sha256.Sum256([]byte(string(bytePassword)))
+			crypt.InitializeBlock([]byte(passwordHash[:]))
+			if strings.HasSuffix(file, ".loki") && os.Args[1] == "-d" || os.Args[1] == "--decrypt" {
+				err := crypt.Decrypter(file)
+				if err != nil {
+					panic(err.Error())
+				}
+			} else if os.Args[1] == "-e" || os.Args[1] == "--encrypt" {
+				err := crypt.Encrypter(file)
+				if err != nil {
+					panic(err.Error())
 				}
 			}
-		default:
-			fmt.Println("Error in given argument, maybe use -h")
+		}
+	default:
+		fmt.Println("Error in given argument, maybe use -h")
 	}
 }
