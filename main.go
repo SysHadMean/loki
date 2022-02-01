@@ -18,21 +18,6 @@ const (
 
 func main() {
 
-	banner :=
-		`
-	
-█    ████▄ █  █▀ ▄█     ▄███▄      ▄   ▄█▄    █▄▄▄▄ ▀▄    ▄ █ ▄▄     ▄▄▄▄▀ ████▄ █▄▄▄▄ 
-█    █   █ █▄█   ██     █▀   ▀      █  █▀ ▀▄  █  ▄▀   █  █  █   █ ▀▀▀ █    █   █ █  ▄▀ 
-█    █   █ █▀▄   ██     ██▄▄    ██   █ █   ▀  █▀▀▌     ▀█   █▀▀▀      █    █   █ █▀▀▌  
-███▄ ▀████ █  █  ▐█     █▄   ▄▀ █ █  █ █▄  ▄▀ █  █     █    █        █     ▀████ █  █  
-    ▀        █    ▐     ▀███▀   █  █ █ ▀███▀    █    ▄▀      █      ▀              █   
-            ▀                   █   ██         ▀              ▀                   ▀    
-                                                                                       
-	A local file encryptor in AES-256. Designed by Yatoub42 under MIT License
-
-
-	`
-
 	usage :=
 		`
 	LOKI(1)                     User Manuals                    LOKI(1)
@@ -66,11 +51,9 @@ FILES
 
 	// Run without args
 	if len(os.Args) == 1 {
-		fmt.Println(banner)
 		fmt.Println("Help with -h argument")
 		os.Exit(0)
 	}
-	fmt.Println(banner)
 	//check args
 	switch {
 	case os.Args[1] == "-h" || os.Args[1] == "--help" || len(os.Args) < 3:
